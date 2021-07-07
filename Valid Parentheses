@@ -1,0 +1,76 @@
+QUESTION
+
+Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+An input string is valid if:
+
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+ 
+
+Example 1:
+
+Input: s = "()"
+Output: true
+Example 2:
+
+Input: s = "()[]{}"
+Output: true
+Example 3:
+
+Input: s = "(]"
+Output: false
+Example 4:
+
+Input: s = "([)]"
+Output: false
+Example 5:
+
+Input: s = "{[]}"
+Output: true
+ 
+
+Constraints:
+
+1 <= s.length <= 104
+s consists of parentheses only '()[]{}'.
+
+SOLUTION
+
+public class Solution 
+{
+    public boolean isValid(String s) 
+    {
+        int len=s.length();
+        if(len % 2 != 0) {
+            return false;
+        }
+        char prev,curr;
+        while(true)
+        {
+            boolean replaced = false;
+            for(int j=0;j<len-1;j++)
+            {
+                prev=s.charAt(j);
+                curr=s.charAt(j+1);
+                if((prev=='(' && curr==')')||(prev=='[' && curr==']')||(prev=='{' && curr=='}'))
+                {
+                    s = s.substring(0,j) + s.substring(j+2);
+                    replaced = true;
+                    len = len-2;
+                }
+                /*else if((prev=='(' && (curr ==']' || curr =='}')) || 
+                        (prev=='{' && (curr ==']' || curr ==')')) || 
+                        (prev=='[' && (curr ==')' || curr =='}')))
+                    return false;
+                */
+            }
+            if (replaced == false)
+                break;
+        }
+        if (len==0)
+            return true;
+        else
+            return false;
+    }
+}
